@@ -60,6 +60,16 @@ class FactLensHandler(SimpleHTTPRequestHandler):
         frontend_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "frontend")
         super().__init__(*args, directory=frontend_dir, **kwargs)
 
+    def do_GET(self):
+        if self.path in ('/health', '/api/health'):
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            self.wfile.write(b'{"status":"ok","service":"FactLens"}')
+            return
+        super().do_GET()
+
     def do_POST(self):
         if self.path == '/api/predict':
             content_length = int(self.headers.get('Content-Length', 0))
@@ -182,14 +192,22 @@ class FactLensHandler(SimpleHTTPRequestHandler):
         self.end_headers()
 
 
-def run_server(port=5000):
+def run_server(port=None):
     init_nlp_and_models()
-    server_address = ('', port)
+    if port is None:
+        env_port = os.environ.get("PORT")
+        if env_port and env_port.isdigit():
+            port = int(env_port)
+        elif len(sys.argv) > 1 and sys.argv[1].isdigit():
+            port = int(sys.argv[1])
+        else:
+            port = 5000
+
+    server_address = ('0.0.0.0', port)
     httpd = ThreadingHTTPServer(server_address, FactLensHandler)
-    url = f"http://localhost:{port}"
+    url = f"http://0.0.0.0:{port}"
     print("=" * 55, flush=True)
-    print(f"[*] FactLens Web App running at: {url}", flush=True)
-    print(f"[*] Open this link in your browser: {url}", flush=True)
+    print(f"[*] FactLens Web App running at: {url} (Port: {port})", flush=True)
     print("Press Ctrl+C to stop the server.", flush=True)
     print("=" * 55 + "\n", flush=True)
     try:
@@ -200,7 +218,4 @@ def run_server(port=5000):
 
 
 if __name__ == "__main__":
-    port = 5000
-    if len(sys.argv) > 1 and sys.argv[1].isdigit():
-        port = int(sys.argv[1])
-    run_server(port)
+    run_server()

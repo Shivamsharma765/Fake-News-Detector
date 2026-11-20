@@ -91,6 +91,37 @@ python train_and_predict.py
 
 ---
 
+## ☁️ Deployment Guide
+
+FactLens is configured for instant deployment across multiple cloud platforms:
+
+### 1. Deploy on Render (Recommended • Free Web Service)
+1. Fork or push this repository to GitHub.
+2. Sign in to [Render](https://render.com) and click **New > Web Service**.
+3. Select your `Fake-News-Detector` / `FactLens` repository.
+4. Render will auto-detect `render.yaml` or you can enter:
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `python server.py`
+5. Click **Deploy Web Service**! Your live app will be accessible at `https://<your-subdomain>.onrender.com`.
+
+### 2. Deploy on Streamlit Community Cloud (Free)
+1. Push this repository to your GitHub account.
+2. Go to [share.streamlit.io](https://share.streamlit.io) and click **New App**.
+3. Select your repository, branch `main`, and main file path: `app.py`.
+4. Click **Deploy**!
+
+### 3. Deploy with Docker
+```bash
+# Build the production image
+docker build -t factlens .
+
+# Run the container
+docker run -p 5000:5000 factlens
+```
+Access at `http://localhost:5000`.
+
+---
+
 ## 📁 Directory Structure
 
 ```

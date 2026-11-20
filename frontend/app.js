@@ -176,7 +176,15 @@ function initFactLens() {
     if (aiCoreOrb) aiCoreOrb.classList.add('analyzing');
 
     try {
-      const apiUrl = (window.location.port === '5000') ? '/api/predict' : 'http://127.0.0.1:5000/api/predict';
+      // Production-ready API routing:
+      // Use relative endpoint '/api/predict' in production or when served from backend.
+      // Use localhost:5000 only when embedded inside local Streamlit (port 8501/8502).
+      let apiUrl = '/api/predict';
+      const isLocal = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+      if (isLocal && window.location.port && window.location.port !== '5000') {
+        apiUrl = 'http://127.0.0.1:5000/api/predict';
+      }
+
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
