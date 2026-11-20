@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FactLens — AI News Credibility & Fact-Checker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Ambient Pastel Lavender Glow Blobs -->
+  <div class="ambient-blob blob-1"></div>
+  <div class="ambient-blob blob-2"></div>
+  <div class="ambient-blob blob-3"></div>
+
+  <div class="page-wrapper">
+    <!-- Main Window / Canvas Container -->
+    <div class="app-card">
+      
+      <!-- Top Navigation Bar -->
+      <header class="navbar">
+        <div class="brand-group">
+          <div class="brand-shield">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="shield-svg">
+              <path d="M12 2L4 5V11.09C4 16.14 7.41 20.85 12 22C16.59 20.85 20 16.14 20 11.09V5L12 2Z" fill="url(#shield-grad)"/>
+              <path d="M9 11.5L11 13.5L15 9.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs>
+                <linearGradient id="shield-grad" x1="4" y1="2" x2="20" y2="22" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#3B82F6"/>
+                  <stop offset="1" stop-color="#6366F1"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <span class="brand-name">FactLens</span>
+        </div>
+
+        <nav class="nav-links">
+          <a href="#" class="nav-link active" id="navHome">Home</a>
+          <a href="#" class="nav-link" id="navHow">How it Works</a>
+          <a href="#" class="nav-link" id="navAbout">About</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="btn-try" id="tryNowBtn">Try Now →</button>
+          <button class="btn-theme" id="themeBtn" title="Theme">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Hero Area -->
+      <main class="hero-section">
+        
+        <!-- Hero Title with Playful Accents -->
+        <div class="hero-title-wrap">
+          <span class="spark spark-cyan"></span>
+          <h1 class="hero-headline">
+            Real or <span class="gradient-fake">Fake?</span>
+          </h1>
+          <span class="spark spark-magenta"></span>
+          <span class="spark spark-blue"></span>
+        </div>
+
+        <p class="hero-subtitle">Get the facts. Check any news in seconds with AI.</p>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+          <div class="search-pill">
+            <span class="link-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+              </svg>
+            </span>
+            <input 
+              type="text" 
+              id="newsInput" 
+              class="news-input" 
+              placeholder="Paste a news link or text..." 
+              autocomplete="off"
+            />
+            <button id="analyzeBtn" class="btn-analyze">
+              <span class="btn-text">Analyze →</span>
+              <span class="spinner hidden"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Category Example Pills -->
+        <div class="example-pills-row">
+          <span class="example-label">Try an example:</span>
+          <div class="example-chips">
+            <button class="cat-pill" data-text="NASA discovers evidence of water ice on Moon south pole">Climate</button>
+            <button class="cat-pill" data-text="Pope Francis endorses Donald Trump for President">Politics</button>
+            <button class="cat-pill" data-text="India wins ICC T20 World Cup final in thrilling match">Sports</button>
+            <button class="cat-pill" data-text="Amitabh Bachchan is dead">Entertainment</button>
+          </div>
+        </div>
+
+        <!-- Engine Mode Switcher Bar -->
+        <div class="engine-toggle-row">
+          <div class="engine-pills">
+            <button id="modeLive" class="engine-btn active" data-mode="live">
+              <span class="dot-online"></span>
+              <span>Live Web Fact-Check (Free API)</span>
+            </button>
+            <button id="modeNlp" class="engine-btn" data-mode="nlp">
+              <span>🧠 Offline NLP Multi-Model</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================= SHOWCASE / LANDING ILLUSTRATION ================= -->
+        <div class="showcase-container" id="showcaseView">
+          <!-- Connecting Wave Dotted Line (Behind) -->
+          <svg class="connecting-wave" viewBox="0 0 700 80" fill="none">
+            <path d="M50 30 Q 180 75 350 40 T 650 45" stroke="url(#wave-gradient)" stroke-width="2.5" stroke-dasharray="5 5" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="wave-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#10B981" />
+                <stop offset="45%" stop-color="#8B5CF6" />
+                <stop offset="75%" stop-color="#D946EF" />
+                <stop offset="100%" stop-color="#EF4444" />
+              </linearGradient>
+            </defs>
+          </svg>
+
+          <!-- Left Card: REAL -->
+          <div class="visual-card real-card" id="cardRealDemo">
+            <div class="badge-row">
+              <div class="pill-verdict pill-real">
+                <span class="badge-icon">✓</span>
+                <span class="badge-text">REAL</span>
+              </div>
+            </div>
+            <div class="card-content-grid">
+              <div class="skeleton-lines">
+                <div class="skeleton-line full"></div>
+                <div class="skeleton-line half"></div>
+                <div class="skeleton-line medium"></div>
+                <div class="skeleton-line quarter"></div>
+              </div>
+              <div class="card-thumbnail">
+                <img 
+                  src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=360&q=80" 
+                  alt="Real news serene landscape" 
+                  class="thumb-img" 
+                  onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'90\'><rect width=\'100%\' height=\'100%\' fill=\'%2310B981\'/><text x=\'50%\' y=\'50%\' fill=\'white\' font-size=\'14\' text-anchor=\'middle\' dy=\'.3em\'>Authentic</text></svg>'"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Center AI Sparkle Orb -->
+          <div class="center-ai-orb-wrap">
+            <div class="orb-outer-ring">
+              <div class="ai-core-orb" id="aiCoreOrb">
+                <span class="ai-sparkles">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+                    <path d="M12 2L14.2 9.8L22 12L14.2 14.2L12 22L9.8 14.2L2 12L9.8 9.8L12 2Z"/>
+                    <path d="M19 17L20 20L23 21L20 22L19 25L18 22L15 21L18 20L19 17Z" transform="scale(0.35) translate(28, 28)"/>
+                    <path d="M5 4L6 7L9 8L6 9L5 12L4 9L1 8L4 7L5 4Z" transform="scale(0.35) translate(-2, -2)"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Card: FAKE -->
+          <div class="visual-card fake-card" id="cardFakeDemo">
+            <div class="dots-decoration">
+              <span class="dot dot-pink"></span>
+              <span class="dot dot-magenta"></span>
+              <span class="dot dot-purple"></span>
+              <span class="dot dot-indigo"></span>
+            </div>
+            <div class="badge-row">
+              <div class="pill-verdict pill-fake">
+                <span class="badge-icon">✕</span>
+                <span class="badge-text">FAKE</span>
+              </div>
+            </div>
+            <div class="card-content-grid">
+              <div class="skeleton-lines">
+                <div class="skeleton-line full"></div>
+                <div class="skeleton-line medium"></div>
+                <div class="skeleton-line half"></div>
+                <div class="skeleton-line quarter"></div>
+              </div>
+              <div class="card-thumbnail">
+                <img 
+                  src="https://images.unsplash.com/photo-1542385151-efd9000785a0?w=360&q=80" 
+                  alt="Fake news sensational smoke scene" 
+                  class="thumb-img" 
+                  onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'90\'><rect width=\'100%\' height=\'100%\' fill=\'%23EF4444\'/><text x=\'50%\' y=\'50%\' fill=\'white\' font-size=\'14\' text-anchor=\'middle\' dy=\'.3em\'>Fabricated</text></svg>'"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= INTERACTIVE RESULTS PANEL ================= -->
+        <div class="results-container hidden" id="resultsView">
+          <div class="results-header-bar">
+            <div class="results-status">
+              <span class="status-pulse-dot"></span>
+              <span id="resultsStatusText">AI Verification Report</span>
+            </div>
+            <button class="btn-back-overview" id="btnBackOverview">
+              <span>✕ Close & Reset</span>
+            </button>
+          </div>
+
+          <!-- Verdict Presentation Card -->
+          <div class="verdict-display-card" id="verdictDisplayCard">
+            <!-- Left Banner with Icon & Tag -->
+            <div class="verdict-main-meta">
+              <div class="verdict-badge-lg" id="verdictBadgeLg">
+                <span id="verdictIcon">✓</span>
+                <span id="verdictLabel">CONFIRMED REAL NEWS</span>
+              </div>
+              <h2 class="verdict-headline" id="verdictHeadline">Corroborated by Global Media</h2>
+              <p class="verdict-explanation" id="verdictExplanation">Multiple reputable news wires and official agencies have confirmed this reporting.</p>
+              
+              <!-- Debunk Alert if applicable -->
+              <div class="debunk-callout hidden" id="debunkCallout">
+                <div class="debunk-shield-icon">🛡️</div>
+                <div class="debunk-details">
+                  <strong>Fact-Checker Debunk:</strong>
+                  <span id="debunkSourceText">Investigated and debunked by recognized fact-checkers.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Gauge and Confidence -->
+            <div class="verdict-gauge-col">
+              <div class="circular-gauge">
+                <svg class="radial-svg" viewBox="0 0 100 100">
+                  <circle class="radial-bg" cx="50" cy="50" r="42"></circle>
+                  <circle class="radial-bar" id="gaugeCircle" cx="50" cy="50" r="42"></circle>
+                </svg>
+                <div class="radial-content">
+                  <span class="radial-pct" id="gaugePct">98%</span>
+                  <span class="radial-sub">Confidence</span>
+                </div>
+              </div>
+
+              <!-- Probability Split Meter -->
+              <div class="dual-meter">
+                <div class="dual-label">
+                  <span>Authentic: <strong id="valReal">98%</strong></span>
+                  <span>Fake: <strong id="valFake">2%</strong></span>
+                </div>
+                <div class="dual-track">
+                  <div class="dual-fill fill-green" id="barReal" style="width: 98%;"></div>
+                  <div class="dual-fill fill-red" id="barFake" style="width: 2%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Corroborating Articles Section (Live Mode) -->
+          <div class="live-articles-panel" id="liveArticlesPanel">
+            <div class="panel-heading">
+              <h3>📡 Corroborating Journalistic Wires & Sources</h3>
+              <span class="article-counter" id="articlesFoundCount">0 articles found</span>
+            </div>
+            <div class="articles-cards-grid" id="articlesCardsGrid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- NLP Vocabulary Insights Panel (NLP Mode) -->
+          <div class="nlp-vocab-panel hidden" id="nlpVocabPanel">
+            <div class="panel-heading">
+              <h3>🧠 Linguistic Model Diagnostics</h3>
+              <span class="article-counter" id="vocabCoveragePct">0% Vocabulary Matched</span>
+            </div>
+            <div class="pills-flex" id="vocabPillsBox"></div>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <p><strong>FactLens</strong> • Advanced News Credibility & AI Misinformation Detection • 100% Free Live Intelligence</p>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- Modal: How it Works -->
+  <div class="modal-backdrop hidden" id="modalHow">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>How FactLens Works</h3>
+        <button class="modal-close" id="closeHowBtn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <strong>Real-Time Live Web Search:</strong>
+            <p>Queries Google News RSS wires across global news agencies (Reuters, BBC, AP, NASA, The Hindu, NYT) with zero API keys required.</p>
+          </div>
+        </div>
+        <div class="modal-step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <strong>Semantic Role & Death Hoax Intelligence:</strong>
+            <p>Distinguishes whether an individual is the actual deceased subject versus someone mourning or giving interviews, and cross-references recognized fact-checkers (FactCheck.org, Snopes, PolitiFact).</p>
+          </div>
+        </div>
+        <div class="modal-step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <strong>NLP Linguistic Feature Classification:</strong>
+            <p>Combines live web searches with 5 Scikit-Learn algorithms (Random Forest, Logistic Regression, etc.) trained on 44,898 articles.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: About -->
+  <div class="modal-backdrop hidden" id="modalAbout">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>About FactLens</h3>
+        <button class="modal-close" id="closeAboutBtn">✕</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>FactLens</strong> is an AI-powered media credibility and news verification engine designed to combat digital disinformation, fabricated headlines, and celebrity death hoaxes.</p>
+        <p style="margin-top: 12px;">Built with high-performance Python, Scikit-Learn, real-time wire verification, and a modern glassmorphic interface.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

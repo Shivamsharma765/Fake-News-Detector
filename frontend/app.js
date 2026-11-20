@@ -181,7 +181,7 @@ function initFactLens() {
       // Use localhost:5000 only when embedded inside local Streamlit (port 8501/8502).
       let apiUrl = '/api/predict';
       const isLocal = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-      if (isLocal && window.location.port && window.location.port !== '5000') {
+      if (isLocal && (window.location.port === '8501' || window.location.port === '8502')) {
         apiUrl = 'http://127.0.0.1:5000/api/predict';
       }
 

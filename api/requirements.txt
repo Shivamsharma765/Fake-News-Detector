@@ -1,0 +1,2 @@
+# FactLens - Vercel Serverless Dependencies
+# Live verification runs with zero external dependencies for fast cold-starts (<50ms).
