@@ -1,21 +1,113 @@
-# 📰 AI News Lab – Fake News Generator & Detector
+# FactLens: AI Fake News Detector & Live Web Fact-Checker
 
-AI News Lab is an educational machine learning project that demonstrates both the creative and analytical capabilities of modern Natural Language Processing (NLP). The application combines **GPT-2**, a powerful language generation model, with a **RoBERTa-based Fake News Detector** to showcase how AI can generate realistic news articles and analyze news content for authenticity.
+A comprehensive Natural Language Processing (NLP) and Real-Time Web Intelligence platform that classifies news stories, verifies arbitrary global claims, and debunks misinformation using machine learning and live journalistic wires.
 
-The project features two interactive modules built with **Gradio**. The **Fake News Generator** allows users to provide a headline or opening sentence, which GPT-2 expands into a complete, realistic-looking news article using configurable generation parameters such as temperature, top-k sampling, top-p sampling, and output length. This helps users understand how generative AI can produce convincing text.
+---
 
-The **Fake News Detector** uses the pre-trained **winterForestStump/Roberta-fake-news-detector** model from Hugging Face to classify news articles as **Fake** or **Real**. Instead of simply returning a label, the model provides confidence scores, giving users insight into the prediction probabilities. While the detector has been fine-tuned for fake news classification, it is intended solely for educational and research purposes and should not be considered a replacement for professional fact-checking.
+## 📌 Dual Verification Engine
 
-The application automatically utilizes GPU acceleration when available and falls back to CPU execution if necessary. A clean, modern interface built with Gradio makes the project easy to use without requiring technical expertise.
+FactLens addresses the traditional limitation of static machine learning models (which only know their training data) by providing two complementary verification engines:
 
-## Features
+### 1. 🌐 Live Global Web Fact-Checking (Any News Topic • 100% Free)
+- **Zero API keys required**: Completely free, unlimited queries powered by real-time Google News RSS wires and global journalism registries.
+- **Universal coverage**: Works on **any** random news claim, modern topic, or viral rumor: science, technology, medicine/health, space, sports, and current politics.
+- **Fact-Checker integration**: Automatically cross-references claims against recognized fact-checking organizations including **FactCheck.org**, **Snopes**, **PolitiFact**, **Reuters Fact Check**, **AP Fact Check**, and **AFP**.
+- **Source article citations**: Returns clickable links and publication timestamps from established news wires (Reuters, BBC, AP, NASA, The New York Times, etc.).
 
-* 🤖 AI-powered fake news generation using GPT-2
-* 🔍 Fake vs Real news detection using a fine-tuned RoBERTa model
-* 📊 Confidence score visualization
-* 🎛 Adjustable text generation parameters
-* 💻 Interactive Gradio web interface
-* ⚡ Automatic GPU/CPU support
-* 🎓 Ideal for learning NLP, Transformers, and AI ethics
+### 2. 🧠 Offline NLP Multi-Model Classifier
+- Evaluates linguistic and vocabulary reporting patterns trained on **44,898 genuine and fake news articles**.
+- Compares 5 distinct machine learning architectures:
+  1. **Random Forest Classifier** (99.79% Accuracy)
+  2. **Decision Tree Classifier** (99.54% Accuracy)
+  3. **Passive Aggressive Classifier** (99.25% Accuracy)
+  4. **Logistic Regression** (98.73% Accuracy)
+  5. **Multinomial Naive Bayes** (93.06% Accuracy)
+- Includes domain-awareness diagnostics: warns when testing out-of-domain words not covered in historical training datasets.
 
-This project was developed as an educational demonstration to highlight both the strengths and limitations of AI-generated content and automated misinformation detection. It serves as a practical example of how transformer-based models can be applied to real-world NLP tasks while promoting responsible AI usage.
+---
+
+## 🎨 User Interfaces
+
+You have two interactive frontend options included out-of-the-box:
+
+### 1. Standalone Glassmorphic Single-Page Web App
+Features an ultra-sleek dark glassmorphic design with circular radial confidence gauges, live wire article cards, and mode switching between Live Web Search and Local NLP:
+
+```powershell
+python server.py
+```
+*Opens at `http://localhost:5000`*
+
+### 2. Streamlit Web Dashboard
+Features comprehensive model benchmarking charts, interactive confusion matrices, probability breakdown meters, and live web fact-checking:
+
+```powershell
+streamlit run app.py
+```
+*Opens automatically at `http://localhost:8501`*
+
+---
+
+## 🚀 How to Run in VS Code
+
+1. Press `Ctrl + Shift + D` (or click **Run and Debug** on the left sidebar).
+2. Choose your preferred run target:
+   - **🌐 Launch Streamlit Web UI (Recommended)**
+   - **🚀 Launch Standalone Web App (server.py)**
+   - **⚡ Run Quick Benchmark CLI**
+   - **🏋️ Train on Full Dataset CLI**
+3. Press **`F5`**!
+
+---
+
+## 💻 CLI Commands
+
+```powershell
+# 1. Verify ANY real-world news claim live across the web (Zero training required)
+python train_and_predict.py --live "NASA discovers evidence of water ice on Moon"
+python train_and_predict.py --live "Pope Francis endorses Donald Trump for President"
+
+# 2. Test local NLP models on a custom headline
+python train_and_predict.py --predict "Federal Reserve raises benchmark interest rate"
+
+# 3. Fast benchmark on a subset
+python train_and_predict.py --quick
+
+# 4. Train full models from scratch
+python train_and_predict.py
+```
+
+---
+
+## 📈 Model Performance Summary
+
+| Model | Accuracy | Precision | Recall | F1 Score |
+| :--- | :---: | :---: | :---: | :---: |
+| **Random Forest** | **99.79%** | **99.81%** | **99.74%** | **99.78%** |
+| **Decision Tree** | **99.54%** | **99.60%** | **99.44%** | **99.52%** |
+| **Passive Aggressive** | **99.25%** | **99.23%** | **99.21%** | **99.22%** |
+| **Logistic Regression** | **98.73%** | **98.70%** | **98.60%** | **98.65%** |
+| **Multinomial Naive Bayes** | **93.06%** | **92.80%** | **92.65%** | **92.72%** |
+
+---
+
+## 📁 Directory Structure
+
+```
+Fake-News-Detector/
+├── dataset/
+│   ├── Fake.csv           # 23,481 fake news articles
+│   └── True.csv           # 21,417 true news articles
+├── frontend/
+│   ├── index.html         # Modern glassmorphic web UI
+│   ├── style.css          # Dark-mode styling & animations
+│   └── app.js             # Mode toggle & live news cards rendering
+├── live_verifier.py       # 100% Free live web news fact-checker
+├── app.py                 # Streamlit web dashboard
+├── server.py              # Zero-dependency web server & API (port 5000)
+├── models.pkl             # Pre-trained cached model bundle
+├── fake_news_detector.ipynb # Interactive Jupyter notebook
+├── train_and_predict.py   # CLI tool & inference engine
+├── .vscode/               # VS Code debug & launch configs
+└── README.md              # Project documentation
+```

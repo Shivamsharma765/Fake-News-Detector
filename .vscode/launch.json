@@ -1,0 +1,35 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "🌐 Launch Streamlit Web UI (Recommended)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "streamlit",
+      "args": ["run", "${workspaceFolder}/app.py", "--server.port", "8501"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "🚀 Launch Standalone Web App (server.py)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/server.py",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "⚡ Run Quick Benchmark CLI",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/train_and_predict.py",
+      "args": ["--quick"],
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "🏋️ Train on Full Dataset CLI",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/train_and_predict.py",
+      "console": "integratedTerminal"
+    }
+  ]
+}
